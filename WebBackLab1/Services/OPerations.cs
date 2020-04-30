@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace WebBackLab1.Services
 {
     
-    public class MyOeration : IOperation
+    public class MyOperation : IOperation
     {
         public double FirstValue { get; private set; }
         public double SecondValue { get; private set; }

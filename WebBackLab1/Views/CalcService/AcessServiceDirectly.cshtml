@@ -2,24 +2,23 @@
     ViewData["Title"] = "AcessServiceDirectly";
 }
 <head>
-    <script type="text/javascript">
-    </script>
 </head>
 <body >
         <div class="text-left">
             <h1 class="display-4"> Acess Service Directly</h1>
         </div>
         <ul class="CalcUl">
-            <li>Rand Value First :<span class="First"></span> </li>
-            <li>Rand Value Second :</li>
+            @inject WebBackLab1.Services.IOperation myoper
+            <li>Rand Value First :@myoper.First() </li>
+            <li>Rand Value Second :@myoper.Second()</li>
             <li>Add :</li>
-            <li>  </li>
+            <li> @myoper.First() + @myoper.Second() = @myoper.Add()</li>
             <li>Sub :</li>
-            <li>  </li>
+            <li> @myoper.First() - @myoper.Second() = @myoper.Sub()</li>
             <li>Mult :</li>
-            <li>  </li>
+            <li> @myoper.First() * @myoper.Second() = @myoper.Mult()</li>
             <li>Div :</li>
-            <li>  </li>
+            <li> @myoper.First() / @myoper.Second() = @myoper.Div()</li>
         </ul>
 </body>
 
