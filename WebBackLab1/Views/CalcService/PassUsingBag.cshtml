@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "PassUsingBag";
+}
+
+<h1>PassUsingModel</h1>
+<div class="text-left">
+    <h1 class="display-4">Pass Using View Bag</h1>
+
+</div>
+<ul class="CalcUl">
+    @foreach (string number in ViewBag.Numbers)
+    {
+        <li>@number</li>
+    }
+    @for (int i = 0; i < ViewBag.Operations.Count; i++)
+    {
+        <li>@ViewBag.Operations[i]</li>
+        <li>@ViewBag.Operations[++i]</li>
+    }
+</ul>
+
