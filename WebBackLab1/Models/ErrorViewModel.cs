@@ -1,6 +1,6 @@
 using System;
 
-namespace WebBackLab1.Models
+namespace kosachev.ivan._931701.backlab2.Models
 {
     public class ErrorViewModel
     {

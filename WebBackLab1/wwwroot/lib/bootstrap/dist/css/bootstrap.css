@@ -390,10 +390,6 @@ h6, .h6 {
   font-size: 1rem;
 }
 
-
-
-
-
 .lead {
   font-size: 1.25rem;
   font-weight: 300;
@@ -421,11 +417,6 @@ h6, .h6 {
   font-size: 3.5rem;
   font-weight: 300;
   line-height: 1.2;
-}
-
-.CalcUl {
-    list-style-type: square;
-    padding-left: 0px;
 }
 
 hr {
@@ -10043,8 +10034,5 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
-   
 }
-
-
 /*# sourceMappingURL=bootstrap.css.map */

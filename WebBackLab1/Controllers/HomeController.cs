@@ -5,9 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebBackLab1.Models;
+using kosachev.ivan._931701.backlab2.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace WebBackLab1.Controllers
+namespace kosachev.ivan._931701.backlab2.Controllers
 {
     public class HomeController : Controller
     {
@@ -23,7 +24,11 @@ namespace WebBackLab1.Controllers
             return View();
         }
 
-    
+ 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
