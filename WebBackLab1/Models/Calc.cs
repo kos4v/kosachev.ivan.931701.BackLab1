@@ -10,6 +10,7 @@ namespace kosachev.ivan._931701.backlab2.Models
         public string First { get; set; }
         public string Second { get; set; }
         public string Operand { get; set; }
+        public string Result { get; set; }
 
     }
 }

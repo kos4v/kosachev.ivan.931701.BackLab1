@@ -5,20 +5,73 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using kosachev.ivan._931701.backlab2.Models;
+using System.Collections.Specialized;
 
 namespace kosachev.ivan._931701.backlab2.Controllers
 {
     public class CalcController : Controller
     {
 
-        [HttpGet]
         public IActionResult Manual()
+        {
+            if (Request.Method != "POST")
+            {
+                return View();
+            }
+            else
+            {
+                Calc calc = new Calc();
+                calc.First = Request.Form["First"];
+                calc.Second = Request.Form["Second"];
+                calc.Operand = Request.Form["Operand"];
+                if ((calc.First).Length > 0 & (calc.Second).Length > 0)
+                {
+                    calc.Result = Calculate.Solution(calc.First, calc.Second, calc.Operand);
+                    return View("~/Views/Calc/ResultManual.cshtml", calc);
+                }
+                else
+                    return View(); 
+            }
+
+        }
+
+        public IActionResult ResultManual()
         {
             return View();
         }
 
-       [HttpPost]
-        public IActionResult Manual(string First, string Second, string Operand)
+        [HttpGet]
+        public IActionResult ManualWithSeparateHandlers()
+        {
+
+                return View();
+        }
+
+        [HttpPost]
+        public IActionResult ManualWithSeparateHandlers(string str  )
+        {
+
+            Calc calc = new Calc();
+            calc.First = Request.Form["First"];
+            calc.Second = Request.Form["Second"];
+            calc.Operand = Request.Form["Operand"];
+            if (calc.First != null & calc.Second != null)
+            {
+                return View("~/Views/Calc/ResultManual.cshtml", calc);
+            }
+            else
+                return View();
+
+        }
+
+
+        [HttpGet]
+        public IActionResult ModelBindingsInParametrs()
+        {
+            return View();
+        }
+
+        public IActionResult ModelBindingsInParametrs(string First, string Second, string Operand)
         {
             if (First != null & Second != null)
             {
@@ -30,15 +83,8 @@ namespace kosachev.ivan._931701.backlab2.Controllers
             }
             else return View();
         }
-        public IActionResult ManualWithSeparateHandlers()
-        {
-            return View();
-        }
-        public IActionResult ModelBindingsInParametrs()
-        {
-            return View();
-        }
-
+      
+      
         [HttpGet]
         public IActionResult ModelBindingsInSeparateModel()
         {
@@ -53,7 +99,7 @@ namespace kosachev.ivan._931701.backlab2.Controllers
                 ViewData["First"] = calc.First;
                 ViewData["Second"] = calc.Second;
                 ViewData["Operand"] = calc.Operand;
-                ViewData["Result"] = Calculate.Solution(calc.First, calc.Second, calc.Operand);
+                ViewData["Result"] = calc.Result =  Calculate.Solution(calc.First, calc.Second, calc.Operand);
                 return View("~/Views/Calc/Result.cshtml");
             }
             return View();
