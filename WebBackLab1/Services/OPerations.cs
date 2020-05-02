@@ -18,7 +18,7 @@ namespace WebBackLab1.Services
         {
             return "" + SecondValue;
         }
-        public MyOeration()
+        public void MyOeration()
         {
             Random random = new Random();
             FirstValue = random.Next(10);
