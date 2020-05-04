@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Quiz";
+}
+<h1 class="Title">@ViewData["Title"]</h1>
+
+<div class="CalcMenu">
+    <h2 style="font-size: 20px">@Model.First  @Model.Operand @Model.Second =</h2>
+    <form method="post">
+        <input name="YourAnswer" type="text"> @ViewData["NotANumber"]
+        <br>
+        <input type="submit" value="Next" name="Action" style="border-radius: 8px">
+        <input type="submit" value="Finish" name="Action" style="border-radius: 8px; background-color: aqua">
+        <input style="display:none" name="First" value="@Model.First">
+        <input style="display:none" name="Operand" value="@Model.Operand">
+        <input style="display:none" name="Second" value="@Model.Second">
+    </form>
+</div>

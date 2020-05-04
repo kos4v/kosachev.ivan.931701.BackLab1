@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Quiz Result";
+}
+<h1 class="Title">@ViewData["Title"]</h1>
+
+<div class="CalcMenu">
+    <h1>Right Answers @ViewData["Correct"] out @ViewData["Total"]</h1>
+    <ul>
+        @foreach (var p in (ViewBag.Result))
+        {
+            <li>@p.First @p.Operand @p.Second = @p.YourAnswer</li>
+        }
+    </ul>
+
+</div>

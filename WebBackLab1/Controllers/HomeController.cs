@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using kosachev.ivan._931701.backlab2.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using WebBackLab1.Models;
 namespace kosachev.ivan._931701.backlab2.Controllers
 {
     public class HomeController : Controller
