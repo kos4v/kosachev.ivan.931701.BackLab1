@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "TextBox";
+}
+
+<div class="text-left">
+    <form runat="server" method="post">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+        <span>Text</span>
+        <br>
+        @Html.TextBox("TextBox","Введите текст")
+        <br>
+        <input type="submit" value="Submit" />
+    </form>
+</div>

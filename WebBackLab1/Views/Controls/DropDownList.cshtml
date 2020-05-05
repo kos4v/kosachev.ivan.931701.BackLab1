@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Controls";
+}
+@model Month
+
+    <div class="text-left">
+        <form runat="server" method="post">
+            <h1 class="display-4">@ViewData["Title"]</h1>
+            <nobr>Text</nobr>
+            <br>
+            @Html.DropDownList("Months", ViewBag.Months as SelectList)
+            <br>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+

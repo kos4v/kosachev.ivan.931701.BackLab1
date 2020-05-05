@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "TextArea";
+}
+    <div class="text-left">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+        <nobr>Text</nobr>
+        <br>
+        @Html.TextArea("TextArea", null, new { @class = "form-control" })
+        <input type="submit" value="Submit" />
+    </div>
+
