@@ -4,7 +4,7 @@
 <h1>@ViewData["Title"]</h1>
 <div class="CalcMenu">
     <form  method="post">
-        <input class="CalcNumber" type="number" id="First" />
+        <input class="CalcNumber" type="number" name="First" />
         <br>
         <select name="Operand">
             <option value="+">+</option>
@@ -13,7 +13,7 @@
             <option value="/">/</option>
         </select>
         <br>
-        <input class="CalcNumber" type="number" id="Second" />
+        <input class="CalcNumber" type="number" name="Second" />
         <br>
         <input type="submit" value="Submit" /><!--onclick="press(this)"-->
     </form>

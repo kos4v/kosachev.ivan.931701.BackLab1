@@ -24,7 +24,8 @@ namespace kosachev.ivan._931701.backlab2.Controllers
                 calc.First = Request.Form["First"];
                 calc.Second = Request.Form["Second"];
                 calc.Operand = Request.Form["Operand"];
-                if ((calc.First).Length > 0 & (calc.Second).Length > 0)
+                double x;
+                if (double.TryParse(calc.First,out x) & double.TryParse(calc.Second, out x))
                 {
                     calc.Result = Calculate.Solution(calc.First, calc.Second, calc.Operand);
                     return View("~/Views/Calc/ResultManual.cshtml", calc);
@@ -33,11 +34,6 @@ namespace kosachev.ivan._931701.backlab2.Controllers
                     return View(); 
             }
 
-        }
-
-        public IActionResult ResultManual()
-        {
-            return View();
         }
 
         [HttpGet]
@@ -54,13 +50,13 @@ namespace kosachev.ivan._931701.backlab2.Controllers
             calc.First = Request.Form["First"];
             calc.Second = Request.Form["Second"];
             calc.Operand = Request.Form["Operand"];
-            calc.Result = Calculate.Solution(calc.First, calc.Second, calc.Operand);
-            if (calc.First != null & calc.Second != null)
+            double x;
+            if (double.TryParse(calc.First, out x) & double.TryParse(calc.Second, out x))
             {
+                calc.Result = Calculate.Solution(calc.First, calc.Second, calc.Operand);
                 return View("~/Views/Calc/ResultManual.cshtml", calc);
             }
-            else
-            return View();
+            else return View();
 
         }
 
@@ -71,17 +67,17 @@ namespace kosachev.ivan._931701.backlab2.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult ModelBindingsInParametrs(string First, string Second, string Operand)
         {
-            if (First != null & Second != null)
+            double x;
+            if (double.TryParse(First, out x) & double.TryParse(Second, out x))
             {
-                ViewData["First"] = First;
-                ViewData["Second"] = Second;
-                ViewData["Operand"] = Operand;
-                ViewData["Result"] = Calculate.Solution(First, Second, Operand);
+                SetViewData(First, Second, Operand);
                 return View("~/Views/Calc/Result.cshtml");
             }
-            else return View();
+            else
+            return View();
         }
       
       
@@ -97,15 +93,27 @@ namespace kosachev.ivan._931701.backlab2.Controllers
             double x;
             if (double.TryParse(calc.First,out x)  & double.TryParse(calc.Second,out x))
             {
-                ViewData["First"] = calc.First;
-                ViewData["Second"] = calc.Second;
-                ViewData["Operand"] = calc.Operand;
-                ViewData["Result"] = calc.Result =  Calculate.Solution(calc.First, calc.Second, calc.Operand);
+                SetViewData(calc.First, calc.Second, calc.Operand);
                 return View("~/Views/Calc/Result.cshtml");
             }
             return View();
         }
 
+        public IActionResult ResultManual()
+        {
+            return View();
+        }
+        public IActionResult Result()
+        {
+            return View();
+        }
+        private void SetViewData(string First, string Second, string Operand)
+        {
+            ViewData["First"] = First;
+            ViewData["Second"] = Second;
+            ViewData["Operand"] = Operand;
+            ViewData["Result"]  = Calculate.Solution(First, Second, Operand);
+        }
 
     }
 }
