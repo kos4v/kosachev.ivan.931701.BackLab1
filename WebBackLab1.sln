@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBackLab1", "WebBackLab1\WebBackLab1.csproj", "{5DD835AE-695C-40D4-A46E-4C7331874453}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBackLab1", "WebBackLab1\WebBackLab1.csproj", "{3F19FB68-58FF-44FE-9671-5D6022E60691}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5DD835AE-695C-40D4-A46E-4C7331874453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DD835AE-695C-40D4-A46E-4C7331874453}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DD835AE-695C-40D4-A46E-4C7331874453}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DD835AE-695C-40D4-A46E-4C7331874453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F19FB68-58FF-44FE-9671-5D6022E60691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F19FB68-58FF-44FE-9671-5D6022E60691}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F19FB68-58FF-44FE-9671-5D6022E60691}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F19FB68-58FF-44FE-9671-5D6022E60691}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9D4ADA7A-4351-491D-8E36-DD13FEDF530B}
+		SolutionGuid = {FCB62D94-1851-4833-B802-5B9153C8AD8A}
 	EndGlobalSection
 EndGlobal
