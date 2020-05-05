@@ -43,7 +43,6 @@ namespace kosachev.ivan._931701.backlab2.Controllers
         [HttpGet]
         public IActionResult ManualWithSeparateHandlers()
         {
-
                 return View();
         }
 
@@ -55,12 +54,13 @@ namespace kosachev.ivan._931701.backlab2.Controllers
             calc.First = Request.Form["First"];
             calc.Second = Request.Form["Second"];
             calc.Operand = Request.Form["Operand"];
+            calc.Result = Calculate.Solution(calc.First, calc.Second, calc.Operand);
             if (calc.First != null & calc.Second != null)
             {
                 return View("~/Views/Calc/ResultManual.cshtml", calc);
             }
             else
-                return View();
+            return View();
 
         }
 
@@ -94,7 +94,8 @@ namespace kosachev.ivan._931701.backlab2.Controllers
         [HttpPost]
         public IActionResult ModelBindingsInSeparateModel(Calc calc)
         {
-            if (calc.First != null & calc.Second != null)
+            double x;
+            if (double.TryParse(calc.First,out x)  & double.TryParse(calc.Second,out x))
             {
                 ViewData["First"] = calc.First;
                 ViewData["Second"] = calc.Second;
@@ -103,7 +104,6 @@ namespace kosachev.ivan._931701.backlab2.Controllers
                 return View("~/Views/Calc/Result.cshtml");
             }
             return View();
-                
         }
 
 
