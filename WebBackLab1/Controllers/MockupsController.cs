@@ -32,7 +32,7 @@ namespace kosachev.ivan._931701.backlab2.Controllers
                 ViewData["NotANumber"] = "Not a number!";
             if (action == "Next")
                 return View(new OperAndNumb());
-            return Redirect("https://localhost:44332/Mockups/QuizResult");
+            return RedirectToAction("QuizResult");
         }
 
       

@@ -21,54 +21,34 @@ namespace WebBackLab1.Models
         public OperAndNumb()
         {
             Random random = new Random();
-
             double First = random.Next(11);
             double Second = random.Next(11);
-            int Operand = random.Next(4);
-            switch (Operand)
-            {
-                case 0:
-                    this.Operand = "+";
-                    break;
-                case 1:
-                    this.Operand = "-";
-                    break;
-                case 2:
-                    this.Operand = "*";
-                    break;
-                case 3:
-                    this.Operand = "/";
-                    break;
-                default:
-                    return;
-            }
+            string[] Operands = { "+", "-", "*", "/" };
+            this.Operand = Operands[random.Next(4)];
             this.First = "" + First;
             this.Second = "" + Second;
         }
         public void Solution()
         {
-            double First = Convert.ToDouble(this.First);
-            double Second = Convert.ToDouble(this.Second);
-            switch (Operand)
+            StringToOper(Operand, Convert.ToDouble(this.First), Convert.ToDouble(this.Second));
+        }
+
+        private void  StringToOper(string oper, double First, double Second)
+        {
+            switch (oper)
             {
                 case "+":
                     CorrectAnswer = "" + (First + Second);
-                    this.Operand = "+";
                     break;
                 case "-":
                     CorrectAnswer = "" + (First - Second);
-                    this.Operand = "-";
                     break;
                 case "*":
                     CorrectAnswer = "" + (First * Second);
-                    this.Operand = "*";
                     break;
                 case "/":
                     CorrectAnswer = "" + (First / Second);
-                    this.Operand = "/";
                     break;
-                default:
-                    return;
             }
         }
         public bool RightOrWrong()
