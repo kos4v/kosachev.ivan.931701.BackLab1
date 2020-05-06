@@ -1,13 +1,9 @@
-﻿@{
-    ViewData["Title"] = "TextBox";
-}
-
-<div class="text-left">
+﻿<div class="text-left">
     <form runat="server" method="post">
         <h1 class="display-4">@ViewData["Title"]</h1>
         <span>Text</span>
         <br>
-        @Html.CheckBox("CheckBox", false)
+        @Html.CheckBox("Text", false)
         <span>IsSelected</span>   
         <br>  
         <input type="submit" value="Submit" />

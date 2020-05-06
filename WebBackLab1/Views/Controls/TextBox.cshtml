@@ -1,13 +1,9 @@
-﻿@{
-    ViewData["Title"] = "TextBox";
-}
-
-<div class="text-left">
+﻿<div class="text-left">
     <form runat="server" method="post">
         <h1 class="display-4">@ViewData["Title"]</h1>
         <span>Text</span>
         <br>
-        @Html.TextBox("TextBox","Введите текст")
+        @Html.TextBox("Text","Введите текст")
         <br>
         <input type="submit" value="Submit" />
     </form>

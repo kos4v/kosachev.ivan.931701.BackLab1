@@ -1,14 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Controls";
-}
-@model Month
-
-    <div class="text-left">
+﻿    <div class="text-left">
         <form runat="server" method="post">
             <h1 class="display-4">@ViewData["Title"]</h1>
             <nobr>Text</nobr>
             <br>
-            @Html.ListBox("Months", ViewBag.Months as SelectList)
+            @Html.ListBox("Text", ViewBag.Months as SelectList)
             <br>
             <input type="submit" value="Submit" />
         </form>

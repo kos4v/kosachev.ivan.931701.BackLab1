@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using WebBackLab1.Models;
 
 namespace WebBackLab1.Controllers
@@ -14,33 +15,91 @@ namespace WebBackLab1.Controllers
         {
             return View();
         }
+      
+        [HttpGet]
         public IActionResult TextBox()
         {
+            ViewData["Title"] = "TextBox";
             return View();
         }
+        [HttpPost]
+        public IActionResult TextBox(string Text)
+        {
+            return SetViewBagAndDataRes("TextBox", "Text", Text);
+        }
+       
+        [HttpGet]
         public IActionResult TextArea()
         {
+            ViewData["Title"] = "TextArea";
             return View();
         }
-        public IActionResult CheckBox()
+        [HttpPost]
+        public IActionResult TextArea(string Text)
         {
-            return View();
+            return SetViewBagAndDataRes("TextArea", "Text", Text);
         }
+       
+        [HttpGet]
         public IActionResult Radio()
         {
+            ViewData["Title"] = "Radio";
             return View();
         }
+        [HttpPost]
+        public IActionResult Radio(string Radio)
+        {
+            return SetViewBagAndDataRes("CheckBox", "Text", Radio);
+        }
+
+        [HttpGet]
+        public IActionResult CheckBox()
+        {
+            ViewData["Title"] = "CheckBox";
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CheckBox(string Text)
+        {
+            return SetViewBagAndDataRes("radio", "IsSelected", Text);
+        }
+
+        [HttpGet]
         public IActionResult DropDownList()
         {
-            SetViewBag();
+            ViewData["Title"] = "DropDownList";
+            SetViewBagMonths();
             return View();
         }
+
+        [HttpPost]
+        public IActionResult DropDownList(string Text)
+        {
+            SetViewBagMonths();
+            return SetViewBagAndDataRes("DropDownList", "Text", Text);
+        }
+
+        [HttpGet]
         public IActionResult ListBox()
         {
-            SetViewBag();
+
+            SetViewBagMonths();
             return View();
         }
-        private void SetViewBag()
+        [HttpPost]
+        public IActionResult ListBox(string Text)
+        {
+            return SetViewBagAndDataRes("ListBox", "Text", Text);
+        }
+
+        private IActionResult SetViewBagAndDataRes(string Title, string Type, string Value)
+        {
+            ViewData["Title"] = Title;
+            ViewBag.ResultType = Type;
+            ViewBag.ResultValue = Value;
+            return View("~/Views/Controls/Result.cshtml");
+        }
+        private void SetViewBagMonths()
         {
             string[] months_str_mass = { "January", "February", "March", "April",
                 "May", "June", "July", "August", "September", "October", "November", "December" };
