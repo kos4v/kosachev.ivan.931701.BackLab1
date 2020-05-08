@@ -71,7 +71,6 @@ namespace WebBackLab1.Controllers
             SetViewBagMonths();
             return View();
         }
-
         [HttpPost]
         public IActionResult DropDownList(string Text)
         {
@@ -106,5 +105,6 @@ namespace WebBackLab1.Controllers
             SelectList months_SList = new SelectList(months_str_mass, "month");
             ViewBag.Months = months_SList;
         }
+        
     }
 }
