@@ -1,4 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Mockups";
 }
 
+<div class="text-left">
+    <h1 class="display-4">Mockups</h1>
+
+</div>
+<ul>
+    <li><a asp-area="" asp-controller="Forums" asp-action="AllForums">All Forums</a></li>
+    <li><a asp-area="" asp-controller="Topics" asp-action="AllTopics">Single Forum</a></li>
+    <li><a asp-area="" asp-controller="Posts" asp-action="Index">Single Topic</a></li>
+    <li><a asp-area="" asp-controller="Folders" asp-action="Index">File_System</a></li>
+    <li><a asp-area="" asp-controller="Pictures" asp-action="Index">Pictures</a></li>
+
+</ul>

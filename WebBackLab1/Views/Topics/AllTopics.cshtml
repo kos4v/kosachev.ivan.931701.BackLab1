@@ -1,0 +1,28 @@
+﻿@model IEnumerable<WebBackLab1.Models.Topic>
+
+
+    <h1>@ViewData["ForumName"]</h1>
+    <span>@ViewData["ForumDescription"]</span>
+<p>
+    <a asp-action="Create" asp-route-id=@ViewBag.ForumId>Create New</a>
+</p>
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-area = "Posts" asp-action="AllPosts" asp-route-id=@Html.DisplayFor(modelItem => item.Id)>@Html.DisplayFor(modelItem => item.Name)</a><br>
+                    User@Mail.ru, @Html.DisplayFor(modelItem => item.DateCreate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reply) Reply
+                </td>
+                <td>
+                    User@Mail.ru<br>
+                    @Html.DisplayFor(modelItem => item.DateCreate)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

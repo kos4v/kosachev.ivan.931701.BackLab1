@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebBackLab1.Models;
@@ -16,10 +13,27 @@ namespace WebBackLab1.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+           
         }
 
         public IActionResult Index()
         {
+            AppdbContext _context = new AppdbContext();
+            if (_context.Folders.FirstOrDefault(m => m.Id > 0) == null)
+            {
+                _context.Folders.Add(new Folder() { Id = 0, Name = "root", });
+            }
+            _context.SaveChanges();
+            if (User.Identity.Name == null)
+            {
+                @ViewData["LogIn"] = "Log in";
+                @ViewData["Register"] = "Register";
+            }
+            else
+            {
+                @ViewData["LogIn"] = "Log out";
+                @ViewData["Register"] = "!" + ("Hello, " + User.Identity.Name) ;
+            }
             return View();
         }
 
