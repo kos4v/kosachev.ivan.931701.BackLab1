@@ -7,7 +7,6 @@ using WebBackLab1.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using Google;
 
 namespace WebBackLab1
 {
@@ -23,7 +22,8 @@ namespace WebBackLab1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppdbContext>(options => options.UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = dbLab6; Trusted_Connection = True;"));
+
+                     services.AddDbContext<AppdbContext>(options => options.UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = dbLab6; Trusted_Connection = True;"));
             // установка конфигурации подключения
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -33,7 +33,7 @@ namespace WebBackLab1
                   Microsoft.AspNetCore.Http.PathString("/Account/Login");
               });
 
-
+            
             services.AddControllersWithViews();
 
         }
@@ -63,6 +63,8 @@ namespace WebBackLab1
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+           //\\\\\\\\\\\\\\
+
         }
     }
 }

@@ -19,9 +19,9 @@ namespace WebBackLab1.Models
     }
     public class PictureViewModel
     {
+        [Required]
         public string Name { get; set; }
+        [Required]
         public IFormFile PictureFile { get; set; }
-        public int FolderId { get; set; }
-        public Folder Folder { get; set; }
     }
 }

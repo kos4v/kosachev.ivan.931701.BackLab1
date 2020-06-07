@@ -18,57 +18,54 @@ namespace WebBackLab1.Controllers
             _context = context;
         }
 
-        // GET: Folders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var appdbContext = _context.Folders.Include(f => f.Folders);
-            return View(await appdbContext.ToListAsync());
+            if (_context.Folders.FirstOrDefault(m => m.Id == id) == null)
+                    return LocalRedirect("~/Home/Index");
+            ViewData["Title"] = _context.Folders.FirstOrDefault(m => m.Id == id).Name;
+            ViewBag.FolderId = id;
+            ViewBag.FolderPreId = _context.Folders.FirstOrDefault(m => m.Id == id).FoldersId;
+            ViewBag.Picture = _context.Pictures.Where(m => m.FolderId == id);
+            return View(await _context.Folders.Where(f => f.FoldersId == id).ToListAsync());
         }
 
-        // GET: Folders/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Choose(int? id,int  number)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var folder = await _context.Folders
-                .Include(f => f.Folders)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (folder == null)
-            {
-                return NotFound();
-            }
-
-            return View(folder);
+            ViewBag.PostsId = id;
+            id = _context.Folders.FirstOrDefault(m => m.Name == "root").Id;
+            ViewData["Title"] = _context.Folders.FirstOrDefault(m => m.Id == id).Name;
+            ViewBag.FolderId = id;
+            ViewBag.FolderPreId = _context.Folders.FirstOrDefault(m => m.Id == id).FoldersId;
+            ViewBag.Picture = _context.Pictures.Where(m => m.FolderId == id);
+            ViewBag.Number = number;
+            return View(await _context.Folders.Where(f => f.FoldersId == id).ToListAsync());
         }
 
-        // GET: Folders/Create
         public IActionResult Create()
         {
             ViewData["FoldersId"] = new SelectList(_context.Folders, "Id", "Name");
             return View();
         }
 
-        // POST: Folders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,FoldersId")] Folder folder)
+        public async Task<IActionResult> Create([Bind("Name")] Folder folder, int? id)
         {
             if (ModelState.IsValid)
             {
+                if (_context.Folders.FirstOrDefault(m => m.Id == id) == null)
+                {
+                    id = _context.Folders.FirstOrDefault(m => m.Name == "root").Id;
+                }
+                folder.FoldersId = _context.Folders.FirstOrDefault(m => m.Id == id).Id;
                 _context.Add(folder);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { id = folder.FoldersId});
             }
             ViewData["FoldersId"] = new SelectList(_context.Folders, "Id", "Name", folder.FoldersId);
             return View(folder);
         }
 
-        // GET: Folders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,9 +82,6 @@ namespace WebBackLab1.Controllers
             return View(folder);
         }
 
-        // POST: Folders/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,FoldersId")] Folder folder)
@@ -115,13 +109,13 @@ namespace WebBackLab1.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FoldersId"] = new SelectList(_context.Folders, "Id", "Name", folder.FoldersId);
             return View(folder);
         }
 
-        // GET: Folders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,19 +130,21 @@ namespace WebBackLab1.Controllers
             {
                 return NotFound();
             }
-
-            return View(folder);
-        }
-
-        // POST: Folders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var folder = await _context.Folders.FindAsync(id);
+            int Folderid = (int)folder.FoldersId;
+            DeleteSubFoldersandFiles(_context.Folders.Where(m=>m.FoldersId == folder.Id).ToList());
             _context.Folders.Remove(folder);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Folders", new { id = Folderid });
+
+        }
+
+        private void DeleteSubFoldersandFiles(List<Folder> folder)
+        {
+            foreach (var item in folder)
+            {
+                DeleteSubFoldersandFiles(_context.Folders.Where(m => m.FoldersId == item.Id).ToList());
+                _context.Folders.Remove(item);
+            }
         }
 
         private bool FolderExists(int id)

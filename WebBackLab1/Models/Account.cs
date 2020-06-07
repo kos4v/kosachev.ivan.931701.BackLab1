@@ -19,7 +19,4 @@ namespace WebBackLab1.Models
         [Compare("Password", ErrorMessage = "Passwords don't match")]
         public string PasswordConfirm { get; set; }
     }
-
-
-
 }

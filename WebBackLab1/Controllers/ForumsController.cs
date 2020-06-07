@@ -63,7 +63,7 @@ namespace WebBackLab1.Controllers
             {
                 _context.Add(forum);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllForums));
             }
             return View(forum);
         }
@@ -114,7 +114,7 @@ namespace WebBackLab1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllForums));
             }
             return View(forum);
         }
@@ -134,19 +134,11 @@ namespace WebBackLab1.Controllers
                 return NotFound();
             }
 
-            return View(forum);
-        }
-
-        // POST: Forums/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var forum = await _context.Forums.FindAsync(id);
             _context.Forums.Remove(forum);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AllForums));
         }
+
 
         private bool ForumExists(int id)
         {

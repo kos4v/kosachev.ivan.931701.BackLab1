@@ -1,48 +1,56 @@
 ﻿@model IEnumerable<WebBackLab1.Models.Post>
+    <h1>@ViewData["Title"]</h1>
 
-@{
-    ViewData["Title"] = "Index";
-}
+    <p>
+        <a asp-action="Create" asp-route-id=@ViewBag.TopicId>Create Post</a> |
+        <a asp-controller="Topics" asp-action="Edit" asp-route-id=@ViewBag.TopicId>Edit Topic</a> |
+        <a asp-controller="Topics" asp-action="Delete" asp-route-id=@ViewBag.TopicId>Delete Topic</a>
+    </p>
 
-<h1>Index</h1>
+    <table class="table">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Text)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Text)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <td>
+                        
+                        @Html.DisplayFor(modelItem => item.AccountCreatorName)
+                        @Html.DisplayFor(modelItem => item.DateCreate)
+                        (edited @Html.DisplayFor(modelItem => item.DateEdit) )
+                        <a asp-controller="Posts" asp-action="Edit" asp-route-id=@item.Id>Edit</a> |
+                        <a asp-controller="Posts" asp-action="Delete" asp-route-id=@item.Id>Delete</a> |
+                        <a asp-controller="Posts" asp-action="Edit" asp-route-id=@item.Id>Attach</a> 
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <h>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </h>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Text)
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-top:hidden">
+                        @if (item.Picture1 != null)
+                        {
+                           <img style='width:33%; height:250px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Picture1))" />
+                        }
+                        @if (item.Picture2 != null)
+                        {
+                           <img style='width:33%; height:250px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Picture2))" />
+                        }
+                        @if (item.Picture3 != null)
+                        {
+                           <img style='width:33%; height:250px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Picture3))" />
+                        }
+                  </td>
+                    </tr>
+            </tbody>
         }
-    </tbody>
-</table>
+    </table>

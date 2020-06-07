@@ -4,7 +4,7 @@
     <h1>@ViewData["ForumName"]</h1>
     <span>@ViewData["ForumDescription"]</span>
 <p>
-    <a asp-action="Create" asp-route-id=@ViewBag.ForumId>Create New</a>
+    <a asp-action="Create" asp-route-id=@ViewBag.ForumId>Create New Topic</a>
 </p>
 <table class="table">
     <tbody>
@@ -12,7 +12,7 @@
         {
             <tr>
                 <td>
-                    <a asp-area = "Posts" asp-action="AllPosts" asp-route-id=@Html.DisplayFor(modelItem => item.Id)>@Html.DisplayFor(modelItem => item.Name)</a><br>
+                    <a asp-controller="Posts" asp-action="Index" asp-route-id=@item.Id>@Html.DisplayFor(modelItem => item.Name)</a><br>
                     User@Mail.ru, @Html.DisplayFor(modelItem => item.DateCreate)
                 </td>
                 <td>

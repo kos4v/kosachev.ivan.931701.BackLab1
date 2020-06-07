@@ -1,4 +1,16 @@
 ﻿<!DOCTYPE html>
+@{
+    if (User.Identity.Name == null)
+    {
+        ViewData["LogIn"] = "Log in";
+        ViewData["Register"] = "Register";
+    }
+    else
+    {
+        ViewData["LogIn"] = "Log out";
+        ViewData["Register"] = "!" + ("Hello, " + User.Identity.Name);
+    }
+}
 <html lang="en">
 <head>
     <meta charset="utf-8" />

@@ -3,10 +3,6 @@
 
     <h1>@ViewData["Title"]</h1>
 
-<form method="get">
-    <input asp-action="Create" asp-route-id=@ViewBag.FolderId type="submit" name="Foldbutton" value="New Folder" />
-    <input asp-controller="Pictures" asp-action="Create" asp-route-id=@ViewBag.FolderId type="submit" name="Foldbutton" value="New file" />
-</form>
 <table class="table">
     <thead>
         <tr>
@@ -27,7 +23,7 @@
         {
             <tr>
                 <td>
-                    <a asp-action="Index" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                    <a asp-action="Choose" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
                     Folder
@@ -36,8 +32,7 @@
                     -
                 </td>
                 <td>
-                    <a  asp-action="Edit" asp-route-id="@item.Id" >Edit</a> |
-                    <a  asp-action="Delete" asp-route-id="@item.Id" >Delete</a>
+                    --
                 </td>
             </tr>
         }
@@ -54,11 +49,9 @@
                     @item.PictureFile.Length
                 </td>
                 <td>
-                    <a asp-controller="Pictures" asp-action="Edit" asp-route-id="@item.Id" asp-route-Folderid=@ViewBag.FolderId>Edit</a> |
-                    <a asp-controller="Pictures" asp-action="Delete" asp-route-id="@item.Id" asp-route-Folderid=@ViewBag.FolderId>Delete</a>
+                    <a asp-controller="Posts" asp-action="Edit" asp-route-id="@ViewBag.PostsId" asp-route-PictureId="@item.Id" asp-route-Number=@ViewBag.Number>Choose</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-<a asp-action="index" asp-route-id="@ViewBag.FolderPreId">Back</a>

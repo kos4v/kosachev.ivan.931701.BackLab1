@@ -14,20 +14,20 @@ namespace WebBackLab1.Models
         public int TopicId { get; set; }
         public Topic Topic { get; set;}
         [Required]
-        public string Title { get; set; }
+        public int AccountCreatorName { get; set; }
+        public Account AccountCreator { get; set; }
         [Required]
-        public string Date { get; set; }
+        public string Title { get; set; }
+        public string DateCreate { get; set; }
+        public string DateEdit { get; set; }
         [Required]
         public string Text { get; set; }
 
-        [Required]
-        public int Picture1Id { get; set; }
+        public byte[] Picture1 { get; set; }
+     
+        public byte[] Picture2 { get; set; }
 
-        [Required]
-        public int Picture2Id { get; set; }
-
-        [Required]
-        public int Picture3Id { get; set; }
-
+        public byte[] Picture3 { get; set; }
+       
     }
 }

@@ -20,20 +20,8 @@ namespace WebBackLab1.Controllers
         {
             AppdbContext _context = new AppdbContext();
             if (_context.Folders.FirstOrDefault(m => m.Id > 0) == null)
-            {
                 _context.Folders.Add(new Folder() { Id = 0, Name = "root", });
-            }
             _context.SaveChanges();
-            if (User.Identity.Name == null)
-            {
-                @ViewData["LogIn"] = "Log in";
-                @ViewData["Register"] = "Register";
-            }
-            else
-            {
-                @ViewData["LogIn"] = "Log out";
-                @ViewData["Register"] = "!" + ("Hello, " + User.Identity.Name) ;
-            }
             return View();
         }
 

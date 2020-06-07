@@ -4,8 +4,10 @@
     ViewData["Title"] = "All Topics";
 }
 
-<h1>Index</h1>
-
+<h1>Admin</h1>
+<p>
+    <a asp-action="Create" asp-route-id=@ViewBag.ForumId>Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBackLab1.Models;
@@ -20,7 +21,7 @@ namespace WebBackLab1.Controllers
 
         public async Task<IActionResult> AllTopics([Bind("Id")] Forum forum)
          {
-            if (forum.Id == 0)
+            if (forum.Id == 0 || forum == null)
                 forum.Id = _context.Forums.First(t => t.Id > 0).Id;
             ViewData["ForumName"] = _context.Forums.FirstOrDefault(t => t.Id == forum.Id).Name;
             ViewData["ForumDescription"] = _context.Forums.FirstOrDefault(t => t.Id == forum.Id).Description;
@@ -68,10 +69,11 @@ namespace WebBackLab1.Controllers
                 topic.DateCreate = "" + date1.DayOfWeek + ", "
                     + date1.ToLongDateString() + ", "
                     + date1.ToLongTimeString();
-                topic.Forum = topic.Forum = _context.Forums.FirstOrDefault(t => t.Id == id);
+                topic.ForumID = _context.Forums.FirstOrDefault(t => t.Id == id).Id;
+                topic.Reply = 0;
                 _context.Add(topic);
-                await _context.SaveChangesAsync();  
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
+                return RedirectToAction("AllTopics", "Topics", new { id = topic.ForumID });
             }
             return View(topic);
         }
@@ -87,29 +89,26 @@ namespace WebBackLab1.Controllers
             {
                 return NotFound();
             }
-            ViewData["ForumID"] = new SelectList(_context.Forums, "Id", "Description", topic.ForumID);
+
             return View(topic);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Reply,ForumID,Date")] Topic topic)
+        public async Task<IActionResult> Edit(int id, [Bind("Name")] Topic topic)
         {
-            if (id != topic.Id)
+            if (ModelState["Name"].ValidationState == ModelValidationState.Valid)
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
+                Topic t = _context.Topics.Find(id);
                 try
                 {
-                    _context.Update(topic);
+                    t.Name = topic.Name;
+                    _context.Update(t);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TopicExists(topic.Id))
+                    if (!TopicExists(t.Id))
                     {
                         return NotFound();
                     }
@@ -118,9 +117,8 @@ namespace WebBackLab1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("AllTopics", "Topics", new { id = t.ForumID });
             }
-            ViewData["ForumID"] = new SelectList(_context.Forums, "Id", "Description", topic.ForumID);
             return View(topic);
         }
 
@@ -130,27 +128,19 @@ namespace WebBackLab1.Controllers
             {
                 return NotFound();
             }
-
             var topic = await _context.Topics
                 .Include(t => t.Forum)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            int ForumId = topic.ForumID;
             if (topic == null)
             {
                 return NotFound();
             }
-
-            return View(topic);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var topic = await _context.Topics.FindAsync(id);
             _context.Topics.Remove(topic);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AllTopics", "Topics", new { id = ForumId });
         }
+
         private bool TopicExists(int id)
         {
             return _context.Topics.Any(e => e.Id == id);

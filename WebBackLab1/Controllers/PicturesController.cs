@@ -47,31 +47,32 @@ namespace WebBackLab1.Controllers
         }
 
         // GET: Pictures/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["FolderId"] = new SelectList(_context.Folders, "Id", "Name");
+            ViewBag.FolderId = id;
             return View();
         }
 
-        // POST: Pictures/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,PictureFile,FolderId")] PictureViewModel picture)
+        public async Task<IActionResult> Create([Bind("Name,PictureFile")] PictureViewModel picture, int? id)
         {
-            if (ModelState.IsValid)
+            if (ModelState["Name"].ValidationState == ModelValidationState.Valid &
+                ModelState["PictureFile"].ValidationState == ModelValidationState.Valid)
             {
+                /*if (_context.Folders.FirstOrDefault(m => m.Id == id) == null)
+                {
+                    id = _context.Folders.FirstOrDefault(m => m.Name == "root").Id;
+                }*/
                 byte[] imageData = null;
                 using (var binaryReader = new BinaryReader((picture.PictureFile).OpenReadStream()))
                 {
                     imageData = binaryReader.ReadBytes((int)(picture.PictureFile).Length);
                 }
-                _context.Add(new Picture {Name = picture.Name, PictureFile = imageData, FolderId=picture.FolderId });
+                _context.Add(new Picture {Name = picture.Name, PictureFile = imageData, FolderId= (int)id});
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Folders", new { id = (int)id });
             }
-            ViewData["FolderId"] = new SelectList(_context.Folders, "Id", "Name,FolderId");
             return View(picture);
         }
 
@@ -88,7 +89,6 @@ namespace WebBackLab1.Controllers
             {
                 return NotFound();
             }
-            ViewData["FolderId"] = new SelectList(_context.Folders, "Id", "Name", picture.FolderId);
             return View(picture);
         }
 
@@ -97,18 +97,15 @@ namespace WebBackLab1.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,PictureFile,FolderId")] Picture picture)
+        public async Task<IActionResult> Edit(int id, [Bind("Name")] Picture picture)
         {
-            if (id != picture.Id)
+            if (ModelState["Name"].ValidationState==ModelValidationState.Valid)
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
+                Picture Newpicture = _context.Pictures.FirstOrDefault(m => m.Id == id);
+                Newpicture.Name = picture.Name;
                 try
                 {
-                    _context.Update(picture);
+                    _context.Update(Newpicture);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -122,14 +119,13 @@ namespace WebBackLab1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Folders", new { id = Newpicture.FolderId });
             }
-            ViewData["FolderId"] = new SelectList(_context.Folders, "Id", "Name", picture.FolderId);
             return View(picture);
         }
 
         // GET: Pictures/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int Folderid)
         {
             if (id == null)
             {
@@ -143,20 +139,11 @@ namespace WebBackLab1.Controllers
             {
                 return NotFound();
             }
-
-            return View(picture);
-        }
-
-        // POST: Pictures/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var picture = await _context.Pictures.FindAsync(id);
             _context.Pictures.Remove(picture);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Folders", new { id = Folderid });
         }
+
 
         private bool PictureExists(int id)
         {
